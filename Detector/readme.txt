@@ -20,15 +20,18 @@ to train and test the classifier you have to follow these precedures:
 
 here are some more notes:
 1. directories should have the following struture:
-    Classifier_win
-		|--pos
-		|   |--(positive images...)
-		|--neg
-		|   |--(negative images...)
-		|--gen
-		|   |--vec
-		|   |   |--(positive data files)
-		|   |--(results...)
-		|--TrainCascade.py
-		|--CascadeDetector.py
-		|--params.txt
+    Detector
+	|--pos
+	|   |--(positive images...)
+	|--neg
+	|   |--(negative images...)
+	|--gen
+	|   |--vec
+	|   |   |--(positive data files)
+	|   |--(results...)
+	|--TrainCascade.py
+	|--CascadeDetector.py
+	|--params.txt
+2. in order to run the test script, your computer must have (or connected to) a camera (webcam etc.)
+3. annotations must done in this fashion: left button of mouse down at left upper corner of object, drag to right lower corner then release
+4. more training parameters may be added to the script
