@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find usb_cam)/launch/usb_cam-test.launch">
+  </include>
+  <node name="visual_odometry" pkg="visual_odometry" type="visual_odometry_node.py" output="screen">
+  </node>
+</launch>
