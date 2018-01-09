@@ -6,15 +6,15 @@ This repository contains code mainly related to visual perception modules on our
 
 ## Contents:
 * 1. modules implementation
- 2. experiments
- 3. docs
+* 2. experiments
+* 3. docs
 
 ## Usage:
 * #### prerequisites for running codes here:
 * 1. Ubuntu 16.04 on your computer (except for the OpenCV Cascade Classifier Training code)
-  2. Python (recommend Anaconda2)
-  3. OpenCV >= 3.2.0 (ROS Kinetic comes with OpenCV 3.2.0dev version, that's OK)
-  4. ROS Kinetic (ROS version for Ubuntu 16.04, 
+* 2. Python (recommend Anaconda2)
+* 3. OpenCV >= 3.2.0 (ROS Kinetic comes with OpenCV 3.2.0dev version, that's OK)
+* 4. ROS Kinetic (ROS version for Ubuntu 16.04, 
         except for the OpenCV Cascade Classifier Training code)
 
 * #### about cameras:
