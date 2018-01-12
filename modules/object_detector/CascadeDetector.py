@@ -15,7 +15,7 @@ class CascadeDetector():
         if self.mode == "camera":
             self.capture = cv2.VideoCapture(0)
         self.detector = cv2.CascadeClassifier('cascade.xml')
-        self.detector.load('.\\gen\\cascade.xml')
+        self.detector.load('./gen/cascade.xml')
         
     def detect_camera(self):
         """detect target from camera"""
@@ -25,7 +25,7 @@ class CascadeDetector():
             ret, frame = self.capture.read()
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
-            targets = self.detector.detectMultiScale(gray, 1.1, 12)
+            targets = self.detector.detectMultiScale(gray, 1.1, 5)
             img = frame.copy()
             
             for (x, y, w, h) in targets:

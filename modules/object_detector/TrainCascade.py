@@ -48,11 +48,11 @@ class CascadeTrainer():
         self.sys = system
         #self.show_data = "False"
         # the training procedure
-        self.load_image()
-        self.load_size()
-        self.load_param()
-        self.write_negative()
-        self.write_positive()
+        #self.load_image()
+        #self.load_size()
+        ##self.load_param()
+        #self.write_negative()
+        #self.write_positive()
         self.create_positive_samples()
         #self.check_positive_samples()
         self.train_classifier()
@@ -193,12 +193,12 @@ class CascadeTrainer():
         """using opencv_createsamples to generate positive samples"""
         print "generating positive data..."
         cmmd = str("opencv_createsamples"
-                   +" -bg "+'.\\bg.txt'
-                   +" -info "+'.\\info.dat' #self.param_values['-info']
-                   +" -w "+self.param_values['-w']
-                   +" -h "+self.param_values['-h']
-                   +" -num "+str(len(self.pos_img))
-                   +" -vec "+'.\\gen\\vec\\pos.vec')
+                   +" -bg "+'./bg.txt'
+                   +" -info "+'./info.dat' #self.param_values['-info']
+                   +" -w "+"24"
+                   +" -h "+"24"
+                   +" -num "+"100"
+                   +" -vec "+'./gen/vec/pos.vec')
         
         os.system(cmmd)
         print "done."
@@ -216,12 +216,12 @@ class CascadeTrainer():
         """using opencv_haartraining to train classifier"""
         print "training classifier..."
         cmmd = str("opencv_traincascade"
-                   +" -data "+'.\\gen'
-                   +" -vec "+'.\\gen\\vec\\pos.vec'
-                   +" -bg "+'.\\bg.txt'
-                   +" -numPos "+str(len(self.pos_img))
-                   +" -numNeg "+str(len(self.neg_img))
-                   +" -numStages "+self.param_values['-numStages'])
+                   +" -data "+'./gen'
+                   +" -vec "+'./gen/vec/pos.vec'
+                   +" -bg "+'./bg.txt'
+                   +" -numPos "+"22"
+                   +" -numNeg "+"60"
+                   +" -numStages "+"5")
         print cmmd
         os.system(cmmd)
         print "done."
