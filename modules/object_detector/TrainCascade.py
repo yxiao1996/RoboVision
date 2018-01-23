@@ -219,8 +219,8 @@ class CascadeTrainer():
                    +" -data "+'./gen'
                    +" -vec "+'./gen/vec/pos.vec'
                    +" -bg "+'./bg.txt'
-                   +" -numPos "+"22"
-                   +" -numNeg "+"60"
+                   +" -numPos "+"50"
+                   +" -numNeg "+"70"
                    +" -numStages "+"5")
         print cmmd
         os.system(cmmd)
