@@ -11,7 +11,7 @@ def getImgNum():
 
     return num_img
 
-def procImage(img_dir, save_dir, img_num, size=(960,540)):
+def procImage(img_dir, save_dir, img_num, size=(960,720)):
     print "processing images..."
     img_iter = glob.iglob(img_dir+'*')
     img_names = []
