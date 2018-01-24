@@ -12,7 +12,7 @@ from IoU import CalcuIoU as IOU
 
 test_dir = './pos/'
 test_format = '.jpeg'
-anno_dir = '/home/yxiao1996/data/balls/Annotations/pos/'
+anno_dir = '/home/yxiao1996/data/balls/1-24/Anno/'
 
 def getItor(anno_dir):
     itor = glob.iglob(anno_dir+'*.xml')
@@ -48,8 +48,8 @@ class CascadeDetector():
         if self.mode == "camera":
             self.capture = cv2.VideoCapture(0)
         self.detector = cv2.CascadeClassifier('cascade.xml')
-        #self.detector.load('./gen/cascade.xml')
-        self.detector.load('/home/yxiao1996/opencv/data/haarcascades/haarcascade_frontalface_default.xml')
+        self.detector.load('./gen/cascade.xml')
+        #self.detector.load('/home/yxiao1996/opencv/data/haarcascades/haarcascade_frontalface_default.xml')
         
     def detect_camera(self):
         """detect target from camera"""
@@ -59,7 +59,7 @@ class CascadeDetector():
             ret, frame = self.capture.read()
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
-            targets = self.detector.detectMultiScale(gray, 1.1, 5)
+            targets = self.detector.detectMultiScale(gray, 1.1, 15)
             img = frame.copy()
             
             for (x, y, w, h) in targets:
@@ -106,20 +106,26 @@ class CascadeDetector():
             #plt.show()
             #tmp = raw_input()
     
-    def test_image(self, xml_dir):
+    def test_image(self, xml_dir): 
         path = root.find('path').text
-        X, W, W, H = findXYWH(root)
+        X, Y, W, H = findXYWH(root)
 
         rgb = cv2.imread(path)
         gray = cv2.cvtColor(rgb, cv2.COLOR_BGR2GRAY)
 
-        targets = self.detector.detectMultiScale(gray, 1.3, 20)
+        targets = self.detector.detectMultiScale(gray, 1.3, 30)
         
         for (x, y, w, h) in targets:
-            cv2.imshow('img',img)
-            cv2.waitKey(0)
+            img = cv2.rectangle(rgb, (x,y), (x+w,y+h), (255,0,0), 2)
+            
+            #cv2.waitKey(0)
             print IOU(x, y, w, h, X, Y, W, H)
-            raw_input()
+            while(1):
+                cv2.imshow('img',img)
+                key = cv2.waitKey(20)
+                if key & 0xFF == ord(" "):
+                    break
+            
     
 if __name__ == '__main__':
     #detector = CascadeDetector()
@@ -129,6 +135,7 @@ if __name__ == '__main__':
     # detector.detect_image(test_dir)
     filename_itor = getItor(anno_dir)
     for filename in filename_itor:
+        print filename
         root = getRoot(filename)
         detector.test_image(root)
     cv2.destroyAllWindows()

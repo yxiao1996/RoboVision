@@ -1,8 +1,8 @@
 import cv2
 import glob
 
-source_dir = '/home/yxiao1996/data/balls/new/'
-target_dir = '/home/yxiao1996/data/balls/pos/'
+source_dir = '/home/yxiao1996/data/balls/1-24/neg_raw/'
+target_dir = '/home/yxiao1996/data/balls/1-24/neg/'
 img_format = '.jpeg'
 
 def getImgNum():

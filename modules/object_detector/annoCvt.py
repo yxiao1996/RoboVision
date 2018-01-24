@@ -1,7 +1,7 @@
 import glob
 import xml.etree.ElementTree as ET
 
-anno_dir = '/home/yxiao1996/data/balls/Annotations/pos/'
+anno_dir = '/home/yxiao1996/data/balls/1-24/Anno/'
 out_filename = './info.dat'
 
 def getItor(anno_dir):
