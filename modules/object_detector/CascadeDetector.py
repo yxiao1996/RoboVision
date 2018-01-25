@@ -106,32 +106,49 @@ class CascadeDetector():
             #plt.show()
             #tmp = raw_input()
     
-    def test_image(self, xml_dir): 
+    def test_image(self, root, consec=False): 
         path = root.find('path').text
         X, Y, W, H = findXYWH(root)
 
         rgb = cv2.imread(path)
         gray = cv2.cvtColor(rgb, cv2.COLOR_BGR2GRAY)
 
-        targets = self.detector.detectMultiScale(gray, 1.3, 30)
+        targets = self.detector.detectMultiScale(gray, 1.3, 10)
         
         for (x, y, w, h) in targets:
             img = cv2.rectangle(rgb, (x,y), (x+w,y+h), (255,0,0), 2)
             
             #cv2.waitKey(0)
             print IOU(x, y, w, h, X, Y, W, H)
+            if consec:
+                return IOU(x, y, w, h, X, Y, W, H)
+
             while(1):
                 cv2.imshow('img',img)
                 key = cv2.waitKey(20)
                 if key & 0xFF == ord(" "):
                     break
-            
+    
+    def test(self):
+        preciesion = 0
+        count = 0
+        filename_itor = getItor(anno_dir)
+        for filename in filename_itor:
+            print filename
+            root = getRoot(filename)
+            iou = self.test_image(root, consec=True)
+            if iou >= 0.5:
+                preciesion += 1
+            count += 1
+        print preciesion
+        print float(preciesion) / float(count)
     
 if __name__ == '__main__':
     #detector = CascadeDetector()
     #detector.detect_camera()
     #detector.release_camera()
     detector = CascadeDetector("image")
+    detector.test()
     # detector.detect_image(test_dir)
     filename_itor = getItor(anno_dir)
     for filename in filename_itor:
