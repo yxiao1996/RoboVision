@@ -12,7 +12,7 @@ from IoU import CalcuIoU as IOU
 
 test_dir = './pos/'
 test_format = '.jpeg'
-anno_dir = '/home/yxiao1996/data/balls/1-24/Anno/'
+anno_dir = '/home/yxiao1996/data/balls/Anno/'
 
 def getItor(anno_dir):
     itor = glob.iglob(anno_dir+'*.xml')
@@ -46,7 +46,7 @@ class CascadeDetector():
             raise Exception("mode should be 'camera' or 'image'!")
         self.mode = mode
         if self.mode == "camera":
-            self.capture = cv2.VideoCapture(0)
+            self.capture = cv2.VideoCapture(1)
         self.detector = cv2.CascadeClassifier('cascade.xml')
         self.detector.load('./gen/cascade.xml')
         #self.detector.load('/home/yxiao1996/opencv/data/haarcascades/haarcascade_frontalface_default.xml')
@@ -59,13 +59,14 @@ class CascadeDetector():
             ret, frame = self.capture.read()
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
-            targets = self.detector.detectMultiScale(gray, 1.1, 15)
+            targets = self.detector.detectMultiScale(gray, 1.3, 6)
             img = frame.copy()
             
             for (x, y, w, h) in targets:
-                img = cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
+                img = cv2.rectangle(img, (x-w/2,y-h/2), (x+w/2,y+h/2), (255,0,0), 2)
                 roi_gray = gray[x:x+w, y:y+h]
                 roi_color = img[x:x+w, y:y+h]
+                break
             cv2.imshow('detector test', img)
             if cv2.waitKey(10) & 0xFF == ord('q'):
                 break
@@ -113,12 +114,14 @@ class CascadeDetector():
         rgb = cv2.imread(path)
         gray = cv2.cvtColor(rgb, cv2.COLOR_BGR2GRAY)
 
-        targets = self.detector.detectMultiScale(gray, 1.3, 10)
+        targets = self.detector.detectMultiScale(gray, 1.2, 3)
         
         for (x, y, w, h) in targets:
             img = cv2.rectangle(rgb, (x,y), (x+w,y+h), (255,0,0), 2)
-            
+            img = cv2.rectangle(rgb, (X-W/2,Y-H/2), (X+W/2,Y+H/2), (0,255,0), 2)
             #cv2.waitKey(0)
+            x = x + w/2
+            y = y + h/2
             print IOU(x, y, w, h, X, Y, W, H)
             if consec:
                 return IOU(x, y, w, h, X, Y, W, H)
@@ -128,20 +131,41 @@ class CascadeDetector():
                 key = cv2.waitKey(20)
                 if key & 0xFF == ord(" "):
                     break
+            break
     
     def test(self):
-        preciesion = 0
+        preciesion_0 = 0
+        preciesion_1 = 0
+        preciesion_2 = 0
+        preciesion_3 = 0
+        preciesion_4 = 0
+        preciesion_5 = 0
         count = 0
         filename_itor = getItor(anno_dir)
         for filename in filename_itor:
             print filename
             root = getRoot(filename)
             iou = self.test_image(root, consec=True)
+            if iou > 0.0:
+                preciesion_0 += 1
+            if iou >= 0.1:
+                preciesion_1 += 1
+            if iou >= 0.2:
+                preciesion_2 += 1
+            if iou >= 0.3:
+                preciesion_3 += 1
+            if iou >= 0.4:
+                preciesion_4 += 1
             if iou >= 0.5:
-                preciesion += 1
+                preciesion_5 += 1
             count += 1
-        print preciesion
-        print float(preciesion) / float(count)
+        #print preciesion_0
+        print float(preciesion_0) / float(count)
+        print float(preciesion_1) / float(count)
+        print float(preciesion_2) / float(count)
+        print float(preciesion_3) / float(count)
+        print float(preciesion_4) / float(count)
+        print float(preciesion_5) / float(count)
     
 if __name__ == '__main__':
     #detector = CascadeDetector()

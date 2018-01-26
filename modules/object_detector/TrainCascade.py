@@ -195,9 +195,9 @@ class CascadeTrainer():
         cmmd = str("opencv_createsamples"
                    +" -bg "+'./bg.txt'
                    +" -info "+'./info.dat' #self.param_values['-info']
-                   +" -w "+"24"
-                   +" -h "+"24"
-                   +" -num "+"100"
+                   +" -w "+"40"
+                   +" -h "+"40"
+                   +" -num "+"260"
                    +" -vec "+'./gen/vec/pos.vec')
         
         os.system(cmmd)
@@ -219,9 +219,11 @@ class CascadeTrainer():
                    +" -data "+'./gen'
                    +" -vec "+'./gen/vec/pos.vec'
                    +" -bg "+'./bg.txt'
-                   +" -numPos "+"100"
-                   +" -numNeg "+"138"
-                   +" -numStages "+"10")
+                   +" -w "+"40"
+                   +" -h "+"40"
+                   +" -numPos "+"200"
+                   +" -numNeg "+"410"
+                   +" -numStages "+"19")
         print cmmd
         os.system(cmmd)
         print "done."

@@ -1,6 +1,6 @@
 import glob
 
-neg_dir = '/home/yxiao1996/data/balls/1-24/neg/'
+neg_dir = '/home/yxiao1996/data/balls/neg/'
 out_filename = './bg.txt'
 
 def getItor(dir):

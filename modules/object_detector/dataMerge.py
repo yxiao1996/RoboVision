@@ -3,7 +3,7 @@ import glob
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
-dataset_dir = "/home/yxiao1996/data/balls/1-24/"
+dataset_dir = "/home/yxiao1996/data/balls/1-25/"
 target_dir = "/home/yxiao1996/data/balls/"
 
 def getItor(anno_dir):
@@ -31,7 +31,10 @@ def saveXML(root, filename, indent="\t", newl="", encoding="utf-8"):
 
 
 def moveImg(filename, offset, pos=True):
-    img = cv2.imread(str(dataset_dir + "pos/" + filename))
+    if pos:
+        img = cv2.imread(str(dataset_dir + "pos/" + filename))
+    else:
+        img = cv2.imread(str(dataset_dir + "neg/" + filename))
     img_num = int(filename.split(".")[0])
     
     new_img_num = img_num + offset
@@ -57,7 +60,7 @@ def moveAnno(root, offset):
     new_img_filename = str(new_img_num) + ".jpeg"
 
     root.find("filename").text = new_img_filename
-    root.find("path").text = target_dir + "pos" + new_img_filename
+    root.find("path").text = target_dir + "pos/" + new_img_filename
     new_filename = str(new_img_num) + ".xml"
     saveXML(root, str(target_dir + "Anno/" + new_filename))
 

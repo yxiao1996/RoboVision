@@ -1,7 +1,7 @@
 import glob
 import xml.etree.ElementTree as ET
 
-anno_dir = '/home/yxiao1996/data/balls/1-24/Anno/'
+anno_dir = '/home/yxiao1996/data/balls/Anno/'
 out_filename = './info.dat'
 
 def getItor(anno_dir):
@@ -39,8 +39,12 @@ def convert(root, out_file):
     min_x = float(bun_box.find('xmin').text)
     max_y = float(bun_box.find('ymax').text)
     min_y = float(bun_box.find('ymin').text)
-    x = int((max_x + min_x) / 2)
-    y = int((max_y + min_y) / 2)
+    #x = int((max_x + min_x) / 2)
+    #y = int((max_y + min_y) / 2)
+    #width = int(max_x - min_x)
+    #height = int(max_y - min_y)
+    x = int(min_x)
+    y = int(min_y)
     width = int(max_x - min_x)
     height = int(max_y - min_y)
     out_file.write(str(x))
